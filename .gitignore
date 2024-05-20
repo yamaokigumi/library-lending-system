@@ -33,3 +33,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# firebaseのシークレットキー(adminsdkで使用しています)
+firebase_secret_key.json
