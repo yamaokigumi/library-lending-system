@@ -18,17 +18,14 @@ export default function book({params}:PageProps){
         if (!book) {
             const getData = async () => {
                 const querySnapshot = await getDocs(collection(db, 'books'));
-                const booksData: Book[] = [];
                 querySnapshot.forEach((doc) => {
-                    booksData.push(doc.data() as Book);
-                });
-                booksData.forEach(element => {
-                    if(element.jancode == book_id){
-                        setBook(element as Book)
-                    }
+                    console.log(doc.data());
+                    if(doc.data().isbnCode == book_id)
+                        setBook(doc.data() as Book)
                 });
             };
             getData();
+            console.log(book);
         }
     }, [book, db]);
     return(
@@ -52,7 +49,7 @@ export default function book({params}:PageProps){
                             <label htmlFor="url" className="px-10 pt-10" >URL</label>
                             <input type="text" id="url" className="mx-10 border border-gray-400 rounded-sm" placeholder="URL" value={book?.url} readOnly/>
                             <label htmlFor="stock" className="px-10 pt-10">在庫数</label>
-                            <input type="text" id="stock" className="mx-10 border border-gray-400 rounded-sm" placeholder="在庫数" value={book?.count}readOnly/>
+                            <input type="text" id="stock" className="mx-10 border border-gray-400 rounded-sm" placeholder="在庫数" value={book?.booksCount}readOnly/>
                             <label htmlFor="tag" className="px-10 pt-10">ジャンルタグ</label>
                             <textarea name="tag" id="tag" className="border border-gray-400 rounded-sm mx-10 h-28" value={book?.tag} readOnly/>                        
                         </div>

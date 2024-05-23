@@ -6,12 +6,13 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Header } from '../components/Header';
 export type Book = {
-    jancode: number;
-    title: string;
+    booksCount: number;
     image: string;
-    tag: string;
+    isbnCode: number;
+    lentBooksCount: number;
+    tag: string[];
+    title: string;
     url: string;
-    count: number;
 };
 
 export default function Main() {
@@ -41,9 +42,9 @@ export default function Main() {
                 </div>
                 <div className="w-1/2 bg-white grid grid-cols-2 relative left-1/2 ">
                     {books?.map((book,i) => (
-                        <div key={book.jancode} className={`relative flex flex-col items-center justify-center  ${(Math.floor(i / 2) + (i % 2)) % 2 === 0?"bg-white":"bg-[#FFFAEB]"}`}>
+                        <div key={book.isbnCode} className={`relative flex flex-col items-center justify-center  ${(Math.floor(i / 2) + (i % 2)) % 2 === 0?"bg-white":"bg-[#FFFAEB]"}`}>
                             <div className="w-full h-64 relative">
-                                <Link href={`../book/${book.jancode}`}>
+                                <Link href={`../book/${book.isbnCode}`}>
                                     <Image
                                         src={book.image}
                                         alt={book.title}
