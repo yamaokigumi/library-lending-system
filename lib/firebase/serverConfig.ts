@@ -11,5 +11,9 @@ if (admin.apps.length === 0) {
   });
 }
 
+
+
 export const auth = getAuth();
 export const db = getFirestore();
+
+export { admin };
