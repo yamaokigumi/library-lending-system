@@ -6,6 +6,13 @@ import React, { useEffect, useState } from 'react'; // Reactのフックをイ�
 import Link from 'next/link'; // Next.jsのLinkコンポーネントをインポート
 import { Header } from '../components/Header'; // ヘッダーコンポーネントをインポート
 
+// カタカナをひらがなに変換する関数
+const toHiragana = (str: string) => {
+    return str.replace(/[\u30a1-\u30f6]/g, function(match) {
+        return String.fromCharCode(match.charCodeAt(0) - 0x60);
+    });
+};
+
 // Book型の定義
 export type Book = {
     booksCount: number; // 在庫数
@@ -38,11 +45,14 @@ export default function Main() {
         }
     }, [books, db]); // booksとdbが変更されたときに再実行
 
+    const normalizedSearchKeyword = toHiragana(searchKeyword.toLowerCase());
+
     // フィルタリングされた書籍データを取得
-    const filteredBooks = books?.filter(book =>
-        book.title.toLowerCase().includes(searchKeyword.toLowerCase()) || // タイトルに検索キーワードが含まれているか
-        (book.tag && book.tag.some(tag => tag.toLowerCase().includes(searchKeyword.toLowerCase()))) // タグに検索キーワードが含まれているか
-    );
+    const filteredBooks = books?.filter(book => {
+        const normalizedTitle = toHiragana(book.title.toLowerCase());
+        const normalizedTags = book.tag?.map(tag => toHiragana(tag.toLowerCase())) || [];
+        return normalizedTitle.includes(normalizedSearchKeyword) || normalizedTags.some(tag => tag.includes(normalizedSearchKeyword));
+    });
 
     return (
         <main className="min-h-screen">

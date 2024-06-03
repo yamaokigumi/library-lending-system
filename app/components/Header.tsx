@@ -1,6 +1,13 @@
 import Image from "next/image"; // Next.jsのImageコンポーネントをインポート
 import Link from "next/link"; // Next.jsのLinkコンポーネントをインポート
-import { useState } from "react"; // Reactのフックをインポート
+import { useState, useEffect } from "react"; // Reactのフックをインポーネート
+
+// カタカナをひらがなに変換する関数
+const toHiragana = (str: string) => {
+    return str.replace(/[\u30a1-\u30f6]/g, function(match) {
+        return String.fromCharCode(match.charCodeAt(0) - 0x60);
+    });
+};
 
 // ヘッダーコンポーネントのプロパティの型定義
 interface HeaderProps {
@@ -13,11 +20,13 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
     const [Searching, setSearch] = useState(false); // 検索モーダルの表示状態を管理するステート
     const [value, setValue] = useState(searchKeyword); // 入力された検索キーワードを管理するステート
 
+    useEffect(() => {
+        setValue(searchKeyword); // 外部からの検索キーワードの変更を反映
+    }, [searchKeyword]);
+
     // モーダルを閉じる関数
     const closeModal = () => {
         setSearch(false); // モーダルを非表示にする
-        setValue(""); // 入力フィールドをクリア
-        if (setSearchKeyword) setSearchKeyword(""); // 親コンポーネントの検索キーワードもクリア
     };
 
     // 検索を処理する関数
