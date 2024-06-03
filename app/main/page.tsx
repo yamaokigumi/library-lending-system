@@ -1,11 +1,20 @@
 'use client';
-import Image from 'next/image';
-import firestore from '@/lib/firebase/config';
-import { collection, getDocs } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Header} from '../components/Header';
-import { Sample } from '../components/Sample';
+import Image from 'next/image'; // Next.jsのImageコンポーネントをインポート
+import firestore from '@/lib/firebase/config'; // Firestoreの設定をインポート
+import { collection, getDocs } from 'firebase/firestore'; // Firestoreからコレクションとドキュメントを取得するための関数をインポート
+import React, { useEffect, useState } from 'react'; // Reactのフックをインポート
+import Link from 'next/link'; // Next.jsのLinkコンポーネントをインポート
+import { Header } from '../components/Header'; // ヘッダーコンポーネントをインポート
+import { Sample } from '../components/Sample'; // Sampleコンポーネントをインポート
+
+// カタカナをひらがなに変換する関数
+const toHiragana = (str: string) => {
+    return str.replace(/[\u30a1-\u30f6]/g, function(match) {
+        return String.fromCharCode(match.charCodeAt(0) - 0x60);
+    });
+};
+
+// Book型の定義
 export type Book = {
     booksCount: number; // 在庫数
     image: string; // 書籍の画像URL
@@ -37,19 +46,21 @@ export default function Main() {
         }
     }, [books, db]); // booksとdbが変更されたときに再実行
 
+    const normalizedSearchKeyword = toHiragana(searchKeyword.toLowerCase());
+
     // フィルタリングされた書籍データを取得
-    const filteredBooks = books?.filter(book =>
-        book.title.toLowerCase().includes(searchKeyword.toLowerCase()) || // タイトルに検索キーワードが含まれているか
-        (book.tag && book.tag.some(tag => tag.toLowerCase().includes(searchKeyword.toLowerCase()))) // タグに検索キーワードが含まれているか
-    );
+    const filteredBooks = books?.filter(book => {
+        const normalizedTitle = toHiragana(book.title.toLowerCase());
+        const normalizedTags = book.tag?.map(tag => toHiragana(tag.toLowerCase())) || [];
+        return normalizedTitle.includes(normalizedSearchKeyword) || normalizedTags.some(tag => tag.includes(normalizedSearchKeyword));
+    });
 
     return (
         <main className="min-h-screen">
-            <Header></Header>
-            
+            <Header searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} /> {/* ヘッダーコンポーネント */}
             <div className="flex flex-row mt-20">
                 <div className="w-1/2 bg-[#FFFAEB] h-screen fixed top-10 text-center p-4 flex items-center justify-center">
-                    <Sample isbn={10110} title={false} />
+                    <Sample isbn={10110} title={false} /> {/* Sampleコンポーネント */}
                 </div>
                 <div className="w-1/2 bg-white grid grid-cols-2 relative left-1/2 ">
                     {filteredBooks?.map((book, i) => (
