@@ -4,7 +4,8 @@ import firestore from '@/lib/firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Header } from '../components/Header';
+import { Header} from '../components/Header';
+import { Sample } from '../components/Sample';
 export type Book = {
     booksCount: number;
     image: string;
@@ -36,9 +37,10 @@ export default function Main() {
     return (
         <main className="min-h-screen">
             <Header></Header>
+            
             <div className="flex flex-row mt-20">
-                <div className="w-1/2 bg-[#FFFAEB] h-screen fixed top-10 text-justify p-4">
-                    #JAVA
+                <div className="w-1/2 bg-[#FFFAEB] h-screen fixed top-10 text-center p-4 flex items-center justify-center">
+                    <Sample isbn={10110} title={false} />
                 </div>
                 <div className="w-1/2 bg-white grid grid-cols-2 relative left-1/2 ">
                     {books?.map((book,i) => (
