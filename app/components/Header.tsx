@@ -1,6 +1,6 @@
 import Image from "next/image"; // Next.jsのImageコンポーネントをインポート
 import Link from "next/link"; // Next.jsのLinkコンポーネントをインポート
-import { useState, useEffect } from "react"; // Reactのフックをインポート
+import { useState } from "react"; // Reactのフックをインポート
 
 // ヘッダーコンポーネントのプロパティの型定義
 interface HeaderProps {
@@ -34,6 +34,13 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
         setSearch(false); // モーダルを閉じる
     };
 
+    // モーダルの外側をクリックしたときに閉じる関数
+    const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (e.target === e.currentTarget) { // モーダルの外側がクリックされたかどうかをチェック
+            closeModal(); // モーダルを閉じる
+        }
+    };
+
     // 検索タグのリスト
     const tags = ["参考書", "java", "php", "html", "css", "python", "aws", "firebase", "c#", "ruby", "javascript", "typescript", "spring", "laravel"];
 
@@ -47,7 +54,10 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
                 <Image src={"https://www.svgrepo.com/show/521518/book-open.svg"} width={30} height={30} alt="admin" /> {/* 管理者アイコン */}
             </div>
             {/* 検索モーダル */}
-            <div className={`${Searching ? "block" : "hidden"} shadow-sm backdrop-blur bg-gray-500 bg-opacity-50 absolute top-0 left-0 w-full h-screen`}>
+            <div
+                className={`${Searching ? "block" : "hidden"} shadow-sm backdrop-blur bg-gray-500 bg-opacity-50 absolute top-0 left-0 w-full h-screen`}
+                onClick={handleOutsideClick} // モーダルの外側をクリックしたときのイベントハンドラ
+            >
                 <div className="bg-white flex flex-col items-center">
                     <div className="flex object-cover w-full h-32 items-center justify-center">
                         <div className="flex border border-solid border-black">
@@ -61,7 +71,7 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
                             />
                             <Image src={"https://www.svgrepo.com/show/486229/magnifying-glass-backup.svg"} width={30} height={30} alt="search" />
                         </div>
-                        <button className="w-[30px] h-[30px] text-center flex items-center justify-center" onClick={() => closeModal()}> {/* モーダルを閉じるボタン */}
+                        <button className="w-[30px] h-[30px] text-center flex items-center justify-center" onClick={closeModal}> {/* モーダルを閉じるボタン */}
                             <Image src={"https://www.svgrepo.com/show/520676/cross.svg"} width={30} height={30} alt="close" />
                         </button>
                     </div>
@@ -74,4 +84,4 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
             </div>
         </div>
     );
-} 
+}
