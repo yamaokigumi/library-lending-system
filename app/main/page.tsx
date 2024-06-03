@@ -1,12 +1,11 @@
 'use client';
-import Image from 'next/image'; // Next.jsのImageコンポーネントをインポート
-import firestore from '@/lib/firebase/config'; // Firestoreの設定をインポート
-import { collection, getDocs } from 'firebase/firestore'; // Firestoreからコレクションとドキュメントを取得するための関数をインポート
-import React, { useEffect, useState } from 'react'; // Reactのフックをインポート
-import Link from 'next/link'; // Next.jsのLinkコンポーネントをインポート
-import { Header } from '../components/Header'; // ヘッダーコンポーネントをインポート
-
-// Book型の定義
+import Image from 'next/image';
+import firestore from '@/lib/firebase/config';
+import { collection, getDocs } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { Header} from '../components/Header';
+import { Sample } from '../components/Sample';
 export type Book = {
     booksCount: number; // 在庫数
     image: string; // 書籍の画像URL
@@ -46,10 +45,11 @@ export default function Main() {
 
     return (
         <main className="min-h-screen">
-            <Header searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} /> {/* ヘッダーコンポーネント */}
+            <Header></Header>
+            
             <div className="flex flex-row mt-20">
-                <div className="w-1/2 bg-[#FFFAEB] h-screen fixed top-10 text-justify p-4">
-                    #JAVA {/* タグ表示部分 */}
+                <div className="w-1/2 bg-[#FFFAEB] h-screen fixed top-10 text-center p-4 flex items-center justify-center">
+                    <Sample isbn={10110} title={false} />
                 </div>
                 <div className="w-1/2 bg-white grid grid-cols-2 relative left-1/2 ">
                     {filteredBooks?.map((book, i) => (
