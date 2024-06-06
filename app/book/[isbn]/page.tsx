@@ -38,7 +38,7 @@ export default function book({params}:PageProps){
                     <Sample isbn={isbn} title={true} />
                 </div>
                 <div className="flex-1 w-1/2 object-cover flex items-center justify-center bg-white">
-                    <Info isbn={isbn} status={4} />
+                    <Info isbn={isbn} status={0} />
                 </div>
             </div>    
         </main>
