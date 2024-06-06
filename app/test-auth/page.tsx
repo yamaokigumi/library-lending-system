@@ -1,50 +1,87 @@
-"use client";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { Content } from "next/font/google";
+'use client'
+import signIn from "@/lib/firebase/signIn";
+import { set } from "firebase/database";
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
-import { auth } from "@/lib/firebase/config"
-import { useRouter } from "next/navigation";
-import success from "../success/page"
 
-export default function LoginPage() {
+function Page(): JSX.Element {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    // const [showEmailError, setShowEmailError] = useState(false);
+    // const [showPasswordError, setShowPasswordError] = useState(false);
+    const [loginError, setLoginError] = useState(false);
     const router = useRouter();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [message, postMessage] = useState("");
 
+    const handleForm = async (event: { preventDefault: () => void }) => {
+        event.preventDefault();
 
-    const handleLogin = async () => {
-        try {
-            const userToken = await signInWithEmailAndPassword(auth, email, password); // Pass the auth object as an argument to signInWithEmailAndPassword
-            const idToken = await userToken.user.getIdToken();
-            const response = await fetch('/api/auth', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ idToken }),
-            });
-            if (response.ok) {
-                const data = await response.json(); // レスポンスデータを取得
-                console.log('Login successful:', data); // ログイン成功メッセージとデータを表示
-                postMessage("ログイン成功！");
-                router.push("/success");
-            } else {
-                postMessage("ログイン失敗");
-            }
-        } catch (error) {
-            console.error(error);
-            postMessage("ログイン失敗");
+        // サインインチェック
+        const { result, error } = await signIn(email, password);
+
+        if (error) {
+           //エラー処理
+            console.log(error);
+            setLoginError(true);
+            return;
         }
+
+        // ログイン成功
+        console.log(result);
+
+        //ログイン成功して遷移させるページの指定(自由に変えていい)
+        //
+        router.push("/success");
     }
+
     return (
-        <div>
-            <h1>Login</h1>
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}>Login</button>
-            {message && <p>{message}</p>}
+        <div className="flex flex-col items-center justify-center h-screen">
+            <div className="w-full max-w-xs">
+                <form onSubmit={handleForm} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <h1 className="text-3xl font-bold mb-6 text-black">Sign In</h1>
+                    <div className="mb-4">
+                        <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+                            Email
+                        </label>
+                        <input
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            type="email"
+                            name="email"
+                            id="email"
+                            placeholder="example@mail.com"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                        {/* {showEmailError && <p className="text-red-500 text-xs italic">メールアドレスは必須です</p>} */}
+                    </div>
+                    <div className="mb-6">
+                        <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+                            Password
+                        </label>
+                        <input
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            type="password"
+                            name="password"
+                            id="password"
+                            placeholder="password"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                        {/* {showPasswordError && <p className="text-red-500 text-xs italic">パスワードは必須です</p>} */}
+                    </div>
+                    {loginError && <p className="text-red-500 text-xs italic">ログインに失敗しました</p>}
+                    <div className="flex items-center justify-between">
+                        
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-500 text-white font-semibold py-2 rounded"
+                        >
+                            Sign In
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }
 
+export default Page;

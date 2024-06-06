@@ -13,7 +13,7 @@ if (admin.apps.length === 0) {
 
 
 
-export const auth = getAuth();
-export const db = getFirestore();
+const auth = getAuth();
+const db = getFirestore();
 
-export { admin };
+export { auth, db, admin as default};
