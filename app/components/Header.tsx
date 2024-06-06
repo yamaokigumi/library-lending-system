@@ -60,7 +60,7 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
                 <button className="ml-auto mr-3" onClick={() => setSearch(true)}> {/* 検索モーダルを表示するボタン */}
                     <Image src={"https://www.svgrepo.com/show/486229/magnifying-glass-backup.svg"} width={30} height={30} alt="search" />
                 </button>
-                <Image src={"https://www.svgrepo.com/show/521518/book-open.svg"} width={30} height={30} alt="admin" /> {/* 管理者アイコン */}
+                <Image src={"https://www.svgrepo.com/show/521518/book-open.svg"} width={30} height={30} alt="admin" className="mr-3"/> {/* 管理者アイコン */}
             </div>
             {/* 検索モーダル */}
             <div
