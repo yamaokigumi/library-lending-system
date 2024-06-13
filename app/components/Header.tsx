@@ -1,7 +1,7 @@
 import Image from "next/image"; // Next.jsのImageコンポーネントをインポート
 import Link from "next/link"; // Next.jsのLinkコンポーネントをインポート
 import { useState, useEffect } from "react"; // Reactのフックをインポーネート
-
+import "@/app/components/Header.css";
 // カタカナをひらがなに変換する関数
 const toHiragana = (str: string) => {
     return str.replace(/[\u30a1-\u30f6]/g, function(match) {
@@ -69,16 +69,16 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
             >
                 <div className="bg-white flex flex-col items-center">
                     <div className="flex object-cover w-full h-32 items-center justify-center">
-                        <div className="flex border border-solid border-black">
+                        <div className="relative search">
                             <input
                                 type="text"
                                 placeholder="title"
                                 value={value} // 入力フィールドの値を設定
                                 onChange={(e) => setValue(e.target.value)} // 入力フィールドの値が変更されたときの処理
                                 onKeyDown={handleSearch} // エンターキーが押されたときの処理
-                                className="ml-1 focus:outline-none"
+                                className="ml-1 focus:outline-none border-2 border-gray-400 border-solid pl-7"
                             />
-                            <Image src={"https://www.svgrepo.com/show/486229/magnifying-glass-backup.svg"} width={30} height={30} alt="search" />
+                            <Image src={"https://www.svgrepo.com/show/486229/magnifying-glass-backup.svg"} width={25} height={25} alt="search" className="customImage absolute top-[0.7px] left-2" />
                         </div>
                         <button className="w-[30px] h-[30px] text-center flex items-center justify-center" onClick={closeModal}> {/* モーダルを閉じるボタン */}
                             <Image src={"https://www.svgrepo.com/show/520676/cross.svg"} width={30} height={30} alt="close" />
@@ -86,7 +86,7 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
                     </div>
                     <div className="grid grid-cols-5 gap-3 w-4/5 text-center justify-center items-center mb-3">
                         {tags.map((tag, index) => (
-                            <button key={index} className="bg-[#D9D9D9] w-[100px]" onClick={() => handleTagClick(tag)}>{tag}</button> 
+                            <button key={index} className="bg-[#D9D9D9] w-[100px] hover:bg-blue-400 hover:text-white border-2 rounded-lg" onClick={() => handleTagClick(tag)}>{tag}</button> 
                         ))}{/* タグボタン */}
                     </div>
                 </div>

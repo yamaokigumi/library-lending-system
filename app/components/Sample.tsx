@@ -33,7 +33,7 @@ export function Sample({isbn,title}:SampleProps){
                 height={300}
                 alt="image"
             />
-            {title?book?.title:book?.tag[0]}
+            {title?book?.title:book?book.tag[0]:""}
         </div>
     )
 }

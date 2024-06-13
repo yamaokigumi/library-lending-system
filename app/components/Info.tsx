@@ -29,9 +29,7 @@ export function Info({isbn,status}:InfoProps){
     const [tag ,setTag] = useState<string[]>();
     const [url,setURL] = useState<string>();
     const [booksCount,setBooksCount] = useState<number>();
-    const addTag = (a:string)=>{
-        console.log(a);
-    }
+
     useEffect(() => {
         if (!book) {
             const getData = async () => {
