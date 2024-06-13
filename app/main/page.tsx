@@ -20,7 +20,7 @@ export type Book = {
     image: string; // 書籍の画像URL
     isbnCode: number; // ISBNコード
     lentBooksCount: number; // 貸出済み書籍数
-    tag?: string[]; // 書籍のタグ（オプショナル）
+    tag: string[]; // 書籍のタグ（オプショナル）
     title: string; // 書籍のタイトル
     url: string; // 書籍のURL
 };
@@ -60,7 +60,7 @@ export default function Main() {
             <Header searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} /> {/* ヘッダーコンポーネント */}
             <div className="flex flex-row mt-20">
                 <div className="w-1/2 bg-[#FFFAEB] h-screen fixed top-10 text-center p-4 flex items-center justify-center">
-                    <Sample isbn={10110} title={false} /> {/* Sampleコンポーネント */}
+                    <Sample isbn={9784297124533} title={false} /> {/* Sampleコンポーネント */}
                 </div>
                 <div className="w-1/2 bg-white grid grid-cols-2 relative left-1/2 ">
                     {filteredBooks?.map((book, i) => (
