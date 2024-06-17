@@ -1,7 +1,7 @@
 'use client'
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import app from '@/lib/firebase/config';
+import app from '@/lib/firebase/AuthConfig';
 
 // 初期化
 const auth = getAuth(app);
