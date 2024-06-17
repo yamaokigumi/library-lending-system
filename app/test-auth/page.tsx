@@ -30,7 +30,7 @@ function Page(): JSX.Element {
 
         //ログイン成功して遷移させるページの指定(自由に変えていい)
         //
-        router.push("/success");
+        router.push("/main");
     }
 
     return (
