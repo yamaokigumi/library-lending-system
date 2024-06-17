@@ -11,9 +11,5 @@ if (admin.apps.length === 0) {
   });
 }
 
-
-
-const auth = getAuth();
-const db = getFirestore();
-
-export { auth, db, admin as default};
+export const auth = getAuth();
+export const db = getFirestore();
