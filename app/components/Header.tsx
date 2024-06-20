@@ -13,10 +13,11 @@ const toHiragana = (str: string) => {
 interface HeaderProps {
     searchKeyword?: string; // オプショナルな検索キーワード
     setSearchKeyword?: (keyword: string) => void; // オプショナルな検索キーワードを設定する関数
+    handleLogout?: () => void; 
 }
 
 // ヘッダーコンポーネントの定義
-export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
+export function Header({ searchKeyword = "", setSearchKeyword, handleLogout }: HeaderProps) {
     const [Searching, setSearch] = useState(false); // 検索モーダルの表示状態を管理するステート
     const [value, setValue] = useState(searchKeyword); // 入力された検索キーワードを管理するステート
 
@@ -57,6 +58,9 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
         <div className="fixed top-0 left-0 w-full z-10">
             <div className="bg-[#3BDEFF] w-full h-10 flex items-center">
                 <Link href={"/main"}><p className='px-10'>ECC Library</p></Link> {/* メインページへのリンク */}
+                <button onClick={handleLogout} className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    ログアウト
+                </button>
                 <button className="ml-auto mr-3" onClick={() => setSearch(true)}> {/* 検索モーダルを表示するボタン */}
                     <Image src={"https://www.svgrepo.com/show/486229/magnifying-glass-backup.svg"} width={30} height={30} alt="search" />
                 </button>

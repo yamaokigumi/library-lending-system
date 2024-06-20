@@ -2,10 +2,13 @@
 import Image from 'next/image'; // Next.jsのImageコンポーネントをインポート
 import firestore from '@/lib/firebase/config'; // Firestoreの設定をインポート
 import { collection, getDocs } from 'firebase/firestore'; // Firestoreからコレクションとドキュメントを取得するための関数をインポート
-import React, { useEffect, useState } from 'react'; // Reactのフックをインポート
+import React, { use, useEffect, useState } from 'react'; // Reactのフックをインポート
 import Link from 'next/link'; // Next.jsのLinkコンポーネントをインポート
 import { Header } from '../components/Header'; // ヘッダーコンポーネントをインポート
 import { Sample } from '../components/Sample'; // Sampleコンポーネントをインポート
+import { useAuthContext } from "@/context/AuthContext";
+import { signOutUser } from "@/lib/firebase/signIn";
+import { useRouter } from "next/navigation";
 
 // カタカナをひらがなに変換する関数
 const toHiragana = (str: string) => {
@@ -54,11 +57,23 @@ export default function Main() {
         const normalizedTags = book.tag?.map(tag => toHiragana(tag.toLowerCase())) || [];
         return normalizedTitle.includes(normalizedSearchKeyword) || normalizedTags.some(tag => tag.includes(normalizedSearchKeyword));
     });
+    const { user } = useAuthContext() as { user: any }; 
+    const router = useRouter();
+    //未ログインのユーザーを弾くif
+    // useEffect(() => {
+    //     if (user == null) {
+    //         router.push("/auth");
+    //     }
+    // }, [user, router]);
+    const handleLogout = async () => {//ログアウト処理
+        await signOutUser();
+        router.push("/auth");
+    }
 
     return (
         <main className="min-h-screen">
-            <Header searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} /> {/* ヘッダーコンポーネント */}
-            <div className="flex flex-row mt-20">
+            <Header searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} handleLogout={handleLogout}/> {/* ヘッダーコンポーネント */}
+            <div className="flex flex-row mt-20">      
                 <div className="w-1/2 bg-[#FFFAEB] h-screen fixed top-10 text-center p-4 flex items-center justify-center">
                     <Sample isbn={9784297124533} title={false} /> {/* Sampleコンポーネント */}
                 </div>
