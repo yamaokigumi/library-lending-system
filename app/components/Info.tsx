@@ -49,8 +49,8 @@ export function Info({isbn,status}:InfoProps){
         }
     }, [book, db]);
     return(
-        <div className="rounded-[100px] bg-[#D9D9D9] object-cover w-[90%] h-screen flex justify-center items-center">
-            <div className="rounded-[100px] bg-white object-cover w-[90%] h-[90%] flex flex-col ">
+        <div className="rounded-[100px] bg-[#D9D9D9] object-cover w-[75%] h-[90vh] flex justify-center items-center">
+            <div className="rounded-[100px] bg-white object-cover w-[95%] h-[95%] flex flex-col ">
                 <label htmlFor="url" className="px-10 pt-10" >URL</label>
                 <input type="text" id="url" className="mx-10 border border-gray-400 rounded-sm" placeholder="URL" value={url} onChange={status==2?(e)=>setURL(e.target.value):()=>{}}/>
                 <label htmlFor="stock" className="px-10 pt-10">在庫数</label>
@@ -76,9 +76,9 @@ export function Info({isbn,status}:InfoProps){
                     </div>
                     :
                     <div className="flex flex-col justify-center items-center">
-                        <div className="grid gap-3 grid-cols-5 items-center">
+                        <div className="grid gap-3 grid-cols-3 items-center">
                             {tags.map((e)=>(
-                                <div><input type="checkbox" name="java" value={e} />{e}</div>
+                                <div ><input type="checkbox" name="java" value={e} />{e}</div>
                             ))}
                             
                         </div>

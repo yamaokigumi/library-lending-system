@@ -51,13 +51,32 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
     };
 
     // 検索タグのリスト
-    const tags = ["参考書", "java", "php", "html", "css", "python", "aws", "firebase", "c#", "ruby", "javascript", "typescript", "spring", "laravel"];
+    const tags = ["Android",
+        "iOS",
+        "Web",
+        "プログラミング",
+        "コンテナ",
+        "OS",
+        "クラウド",
+        "ネットワーク",
+        "データベース",
+        "資格",
+        "セキュリティ",
+        "IoT",
+        "ノーコード",
+        "デザイン",
+        "ゲーム"];
 
     return (
-        <div className="fixed top-0 left-0 w-full z-10">
-            <div className="bg-[#3BDEFF] w-full h-10 flex items-center">
-                <Link href={"/main"}><p className='px-10'>ECC Library</p></Link> {/* メインページへのリンク */}
-                <button className="ml-auto mr-3" onClick={() => setSearch(true)}> {/* 検索モーダルを表示するボタン */}
+        <div className="fixed top-0 left-0 w-full z-10 border-b-2 border-gray-400">
+            <div className="bg-[#F8F8FF] w-full h-10 flex items-center">
+                {/* メインページへのリンク */}
+                <Link href={"/main"} className="flex items-center ml-3 ">
+                    <p className='w-7 h-7 flex items-center text-center justify-center bg-[#3BDEFF] text-white mx-1'>C</p>
+                    <p className='w-7 h-7 flex items-center text-center justify-center bg-[#3BDEFF] text-white mx-1'>B</p>
+                    <p className='w-7 h-7 flex items-center text-center justify-center bg-[#3BDEFF] text-white mx-1'>I</p>
+                    <p className='w-7 h-7 flex items-center text-center justify-center bg-[#3BDEFF] text-white mx-1'>S</p>
+                </Link>                 <button className="ml-auto mr-3" onClick={() => setSearch(true)}> {/* 検索モーダルを表示するボタン */}
                     <Image src={"https://www.svgrepo.com/show/486229/magnifying-glass-backup.svg"} width={30} height={30} alt="search" />
                 </button>
                 <Image src={"https://www.svgrepo.com/show/521518/book-open.svg"} width={30} height={30} alt="admin" className="mr-3"/> {/* 管理者アイコン */}
@@ -86,7 +105,7 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
                     </div>
                     <div className="grid grid-cols-5 gap-3 w-4/5 text-center justify-center items-center mb-3">
                         {tags.map((tag, index) => (
-                            <button key={index} className="bg-[#D9D9D9] w-[100px] hover:bg-blue-400 hover:text-white border-2 rounded-lg" onClick={() => handleTagClick(tag)}>{tag}</button> 
+                            <button key={index} className="bg-[#D9D9D9] w-[120px] hover:bg-blue-400 hover:text-white border-2 rounded-lg" onClick={() => handleTagClick(tag)}>{tag}</button> 
                         ))}{/* タグボタン */}
                     </div>
                 </div>

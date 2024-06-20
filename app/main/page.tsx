@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'; // Reactのフックをイ�
 import Link from 'next/link'; // Next.jsのLinkコンポーネントをインポート
 import { Header } from '../components/Header'; // ヘッダーコンポーネントをインポート
 import { Sample } from '../components/Sample'; // Sampleコンポーネントをインポート
+import "./main.css"; //アニメーション用のcssインポート
 
 // カタカナをひらがなに変換する関数
 const toHiragana = (str: string) => {
@@ -58,13 +59,13 @@ export default function Main() {
     return (
         <main className="min-h-screen">
             <Header searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} /> {/* ヘッダーコンポーネント */}
-            <div className="flex flex-row mt-20">
-                <div className="w-1/2 bg-[#FFFAEB] h-screen fixed top-10 text-center p-4 flex items-center justify-center">
+            <div className="flex flex-row mt-12">
+                <div className="w-1/2 bg-white border-r-2 border-gray-200 h-screen fixed top-10 text-center p-4 flex items-center justify-center">
                     <Sample isbn={9784297124533} title={false} /> {/* Sampleコンポーネント */}
                 </div>
                 <div className="w-1/2 bg-white grid grid-cols-2 relative left-1/2 ">
                     {filteredBooks?.map((book, i) => (
-                        <div key={book.isbnCode} className={`relative flex flex-col items-center justify-center ${(Math.floor(i / 2) + (i % 2)) % 2 === 0 ? "bg-white" : "bg-[#FFFAEB]"}`}>
+                        <div key={book.isbnCode} className={`book relative flex flex-col items-center justify-center ${(Math.floor(i / 2) + (i % 2)) % 2 === 0 ? "bg-white" : "bg-[#f3f3f3]"}`}>
                             <div className="w-full h-64 relative">
                                 <Link href={`../book/${book.isbnCode}`}> {/* 書籍詳細ページへのリンク */}
                                     <Image
@@ -72,11 +73,13 @@ export default function Main() {
                                         alt={book.title} // 代替テキストとして書籍のタイトル
                                         layout="fill"
                                         objectFit="contain"
-                                        className="rounded" // 角を丸くするクラス
+                                        className="image rounded" // 角を丸くするクラス
                                     />
                                 </Link>
                             </div>
-                            <p className="mt-2 text-center">{book.title}</p> {/* 書籍のタイトル */}
+                            <p className="title mt-2 text-center hidden">
+                                {book.title.slice(0,7)}...
+                            </p> {/* 書籍のタイトル */}
                         </div>
                     ))}
                 </div>
