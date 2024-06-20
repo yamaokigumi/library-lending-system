@@ -26,7 +26,7 @@ export function Sample({isbn,title}:SampleProps){
         }
     }, [book, db]);
     return(
-        <div className="w-1/2 h-3/4 flex flex-col items-center">
+        <div className="w-1/2 h-3/4 flex flex-col items-center ">
             <Image
                 src={book?book.image:""}
                 width={300}
