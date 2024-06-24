@@ -29,11 +29,10 @@ export function Sample({isbn,title}:SampleProps){
         <div className="w-1/2 h-3/4 flex flex-col items-center ">
             <Image
                 src={book?book.image:""}
-                width={300}
-                height={300}
+                width={800}
+                height={800}
                 alt="image"
             />
-            {title?book?.title:book?book.tag[0]:""}
         </div>
     )
 }
