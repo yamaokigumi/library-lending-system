@@ -66,14 +66,14 @@ export default function Main() {
                 <div className="w-1/2 bg-white grid grid-cols-2 relative left-1/2 ">
                     {filteredBooks?.map((book, i) => (
                         <div key={book.isbnCode} className={`book relative flex flex-col items-center justify-center ${(Math.floor(i / 2) + (i % 2)) % 2 === 0 ? "bg-white" : "bg-[#f3f3f3]"}`}>
-                            <div className="w-full h-64 relative">
-                                <Link href={`../book/${book.isbnCode}`}> {/* 書籍詳細ページへのリンク */}
+                            <div className="w-full h-64 relative ">
+                                <Link href={`../book/${book.isbnCode}`} > {/* 書籍詳細ページへのリンク */}
                                     <Image
                                         src={book.image} // 書籍の画像URL
                                         alt={book.title} // 代替テキストとして書籍のタイトル
                                         layout="fill"
                                         objectFit="contain"
-                                        className="image rounded" // 角を丸くするクラス
+                                        className="image rounded p-3" // 角を丸くするクラス
                                     />
                                 </Link>
                             </div>

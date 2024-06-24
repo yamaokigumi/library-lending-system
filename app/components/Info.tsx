@@ -2,6 +2,7 @@ import { Book } from "../main/page";
 import firestore from "@/lib/firebase/config";
 import { useState,useEffect } from "react";
 import { getDocs,collection } from "firebase/firestore";
+import { title } from "process";
 type InfoProps = {
     isbn:number;
     //0:なにもなし,1:貸出返却,2:追加,3:削除
@@ -26,6 +27,9 @@ export function Info({isbn,status}:InfoProps){
         "ゲーム"]
     const [book,setBook] = useState<Book>();
     const db = firestore;
+
+    //それぞれの項目を変更する可能性があるので変数として置いておく
+    const [title,setTitle] = useState<string>();
     const [tag ,setTag] = useState<string[]>();
     const [url,setURL] = useState<string>();
     const [booksCount,setBooksCount] = useState<number>();
@@ -43,6 +47,7 @@ export function Info({isbn,status}:InfoProps){
             getData();
             console.log(book);
         }else{
+            setTitle(book.title);
             setTag(book.tag);
             setURL(book.url);
             setBooksCount(book.booksCount);
@@ -50,15 +55,16 @@ export function Info({isbn,status}:InfoProps){
     }, [book, db]);
     return(
         <div className="rounded-[100px] bg-[#D9D9D9] object-cover w-[75%] h-[90vh] flex justify-center items-center">
-            <div className="rounded-[100px] bg-white object-cover w-[95%] h-[95%] flex flex-col ">
-                <label htmlFor="url" className="px-10 pt-10" >URL</label>
-                <input type="text" id="url" className="mx-10 border border-gray-400 rounded-sm" placeholder="URL" value={url} onChange={status==2?(e)=>setURL(e.target.value):()=>{}}/>
-                <label htmlFor="stock" className="px-10 pt-10">在庫数</label>
-                <input type="number" id="stock" className="mx-10 border border-gray-400 rounded-sm" placeholder="在庫数" value={booksCount} onChange={status==2?(e)=>setBooksCount((Number)(e.target.value)):()=>{}} />
-                <label htmlFor="tag" className="px-10 pt-10">ジャンルタグ</label>
+            <div className="rounded-[100px] bg-white object-cover w-[95%] h-[95%] flex flex-col p-5">
+                <h1 className="pt-7 text-center ">{title}</h1>
+                <label htmlFor="url" className="pt-5" >公式サイト</label>
+                <a href={url} className="object-cover w-full text-blue-300 text-nowrap">{url}</a>
+                <label htmlFor="stock" className="pt-5">在庫数</label>
+                <input type="number" id="stock" className="border border-gray-400 rounded-sm" placeholder="在庫数" value={booksCount} onChange={status==2?(e)=>setBooksCount((Number)(e.target.value)):()=>{}} />
+                <label htmlFor="tag" className="pt-5">ジャンルタグ</label>
                 {status!=2?
                     <div className="w-full">
-                        <textarea name="tag" id="tag" className="border border-gray-400 rounded-sm mx-10 h-28 w-5/6" value={tag} />
+                        <textarea name="tag" id="tag" className="border border-gray-400 rounded-sm h-28 w-5/6 resize-none" value={tag} />
                         {status==1?
                             <div className="flex flex-col items-center justify-center">
                                 <button className="mt-3  bg-[#3BDEFF] object-cover w-4/5 hover:bg-blue-500 text-white">貸出</button>
