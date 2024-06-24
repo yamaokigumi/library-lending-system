@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"; // Reactのフックをインポー
 import "@/app/components/Header.css";
 // カタカナをひらがなに変換する関数
 const toHiragana = (str: string) => {
-    return str.replace(/[\u30a1-\u30f6]/g, function(match) {
+    return str.replace(/[\u30a1-\u30f6]/g, function (match) {
         return String.fromCharCode(match.charCodeAt(0) - 0x60);
     });
 };
@@ -13,7 +13,7 @@ const toHiragana = (str: string) => {
 interface HeaderProps {
     searchKeyword?: string; // オプショナルな検索キーワード
     setSearchKeyword?: (keyword: string) => void; // オプショナルな検索キーワードを設定する関数
-    handleLogout?: () => void; 
+    handleLogout?: () => void;
 }
 
 // ヘッダーコンポーネントの定義
@@ -77,11 +77,14 @@ export function Header({ searchKeyword = "", setSearchKeyword, handleLogout }: H
                     <p className='w-7 h-7 flex items-center text-center justify-center bg-[#3BDEFF] text-white mx-1'>B</p>
                     <p className='w-7 h-7 flex items-center text-center justify-center bg-[#3BDEFF] text-white mx-1'>I</p>
                     <p className='w-7 h-7 flex items-center text-center justify-center bg-[#3BDEFF] text-white mx-1'>S</p>
-                </Link>                 
-                <button className="ml-auto mr-3" onClick={() => setSearch(true)}> {/* 検索モーダルを表示するボタン */}     
+                </Link>
+                <button className="ml-auto mr-3" onClick={() => setSearch(true)}> {/* 検索モーダルを表示するボタン */}
                     <Image src={"https://www.svgrepo.com/show/486229/magnifying-glass-backup.svg"} width={30} height={30} alt="search" />
                 </button>
-                <Image src={"https://www.svgrepo.com/show/521518/book-open.svg"} width={30} height={30} alt="admin" className="mr-3"/> {/* 管理者アイコン */}
+                <Image src={"https://www.svgrepo.com/show/521518/book-open.svg"} width={30} height={30} alt="admin" className="mr-3" /> {/* 管理者アイコン */}
+                <button className="" onClick={handleLogout}>
+                    <Image src={"https://www.svgrepo.com/show/502760/logout.svg"} width={30} height={30} alt="admin" className="mr-3" /> {/* ログアウトアイコン */}
+                </button>
             </div>
             {/* 検索モーダル */}
             <div
@@ -107,7 +110,7 @@ export function Header({ searchKeyword = "", setSearchKeyword, handleLogout }: H
                     </div>
                     <div className="grid grid-cols-5 gap-3 w-4/5 text-center justify-center items-center mb-3">
                         {tags.map((tag, index) => (
-                            <button key={index} className="bg-[#D9D9D9] w-[120px] hover:bg-blue-400 hover:text-white border-2 rounded-lg" onClick={() => handleTagClick(tag)}>{tag}</button> 
+                            <button key={index} className="bg-[#D9D9D9] w-[120px] hover:bg-blue-400 hover:text-white border-2 rounded-lg" onClick={() => handleTagClick(tag)}>{tag}</button>
                         ))}{/* タグボタン */}
                     </div>
                 </div>

@@ -73,7 +73,7 @@ export default function Main() {
 
     return (
         <main className="min-h-screen">
-            <Header searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} /> {/* ヘッダーコンポーネント */}
+            <Header searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} handleLogout={handleLogout}/> {/* ヘッダーコンポーネント */}
             <div className="flex flex-row mt-12">
                 <div className="w-1/2 bg-white border-r-2 border-gray-200 h-screen fixed top-10 text-center p-4 flex items-center justify-center">
                     <Sample isbn={9784297124533} title={false} /> {/* Sampleコンポーネント */}
