@@ -13,10 +13,11 @@ const toHiragana = (str: string) => {
 interface HeaderProps {
     searchKeyword?: string; // オプショナルな検索キーワード
     setSearchKeyword?: (keyword: string) => void; // オプショナルな検索キーワードを設定する関数
+    handleLogout?: () => void; 
 }
 
 // ヘッダーコンポーネントの定義
-export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
+export function Header({ searchKeyword = "", setSearchKeyword, handleLogout }: HeaderProps) {
     const [Searching, setSearch] = useState(false); // 検索モーダルの表示状態を管理するステート
     const [value, setValue] = useState(searchKeyword); // 入力された検索キーワードを管理するステート
 
@@ -76,7 +77,8 @@ export function Header({ searchKeyword = "", setSearchKeyword }: HeaderProps) {
                     <p className='w-7 h-7 flex items-center text-center justify-center bg-[#3BDEFF] text-white mx-1'>B</p>
                     <p className='w-7 h-7 flex items-center text-center justify-center bg-[#3BDEFF] text-white mx-1'>I</p>
                     <p className='w-7 h-7 flex items-center text-center justify-center bg-[#3BDEFF] text-white mx-1'>S</p>
-                </Link>                 <button className="ml-auto mr-3" onClick={() => setSearch(true)}> {/* 検索モーダルを表示するボタン */}
+                </Link>                 
+                <button className="ml-auto mr-3" onClick={() => setSearch(true)}> {/* 検索モーダルを表示するボタン */}     
                     <Image src={"https://www.svgrepo.com/show/486229/magnifying-glass-backup.svg"} width={30} height={30} alt="search" />
                 </button>
                 <Image src={"https://www.svgrepo.com/show/521518/book-open.svg"} width={30} height={30} alt="admin" className="mr-3"/> {/* 管理者アイコン */}
