@@ -38,16 +38,20 @@ export default function Home() {
     };
 
     const AddBook = async () =>{
-        const querySnapshot = await setDoc(doc(db, "books","test"),{
+        if(book?.isbn){
+        const querySnapshot = await setDoc(doc(db, "books", book.isbn.toString()),{
             booksCount: 1,
-            image: book?.image,
-            isbnCode: book?.isbn,
+            image: book.image,
+            isbnCode: book.isbn,
             lentBooksCount: 1,
-            //tag: tagをどうするか
-            title: book?.title,
+            tag: ["test"],
+            title: book.title,
             //url: amazon?
         })
         console.log(querySnapshot);
+    }else{
+        console.error("isbnがありません");
+    }
         
             
     }
