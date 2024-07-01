@@ -4,6 +4,16 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
+interface Book {
+    title: string;
+    image: string;
+    tag: string[];
+    isbnCode: number;
+    url: string;
+    booksCount: number;
+    lentBooksCount: number;
+}
+
 export default function Home() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null); // 選択された画像
     const [destination, setDestination] = useState<string | null>(null); // 目的地のURL
@@ -22,6 +32,16 @@ export default function Home() {
         setSelectedImage(null); // 選択された画像をリセット
         setDestination(null); // 目的地のURLをリセット
     };
+
+    // 登録用:この関数発火させてください。
+    const registerBook = async (book: Book) => {
+        const response = await fetch("/api/info", {
+            method: "POST",
+            body: JSON.stringify(book)
+        });
+
+        console.log(response);
+    }
     
     useEffect(() => {
         if (selectedImage && destination) {
