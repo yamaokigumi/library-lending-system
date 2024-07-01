@@ -8,23 +8,25 @@ type InfoProps = {
     //0:なにもなし,1:貸出返却,2:追加,3:削除
     status:number;
 }
+export const tags = [
+    "Android",
+    "iOS",
+    "Web",
+    "プログラミング",
+    "コンテナ",
+    "OS",
+    "クラウド",
+    "ネットワーク",
+    "データベース",
+    "資格",
+    "セキュリティ",
+    "IoT",
+    "ノーコード",
+    "デザイン",
+    "ゲーム"]
 export function Info({isbn,status}:InfoProps){
-    const tags = [
-        "Android",
-        "iOS",
-        "Web",
-        "プログラミング",
-        "コンテナ",
-        "OS",
-        "クラウド",
-        "ネットワーク",
-        "データベース",
-        "資格",
-        "セキュリティ",
-        "IoT",
-        "ノーコード",
-        "デザイン",
-        "ゲーム"]
+
+        
     const [book,setBook] = useState<Book>();
     const db = firestore;
 
@@ -33,7 +35,6 @@ export function Info({isbn,status}:InfoProps){
     const [tag ,setTag] = useState<string[]>();
     const [url,setURL] = useState<string>();
     const [booksCount,setBooksCount] = useState<number>();
-
     useEffect(() => {
         if (!book) {
             const getData = async () => {
