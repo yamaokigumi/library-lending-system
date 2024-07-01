@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import firestore from '@/lib/firebase/config';
-import { doc, addDoc, setDoc, collection, getDocs} from 'firebase/firestore';
+import { doc, addDoc, setDoc, collection, getDocs } from 'firebase/firestore';
 import axios from 'axios';
 import { title } from 'process';
-
+import { tags } from '@/app/components/Info';
 interface Book {
     id: string;
     title: string;
@@ -37,25 +37,27 @@ export default function Home() {
         setIsbn(value);
     };
 
-    const AddBook = async () =>{
-        if(book?.isbn){
-        const querySnapshot = await setDoc(doc(db, "books", book.isbn.toString()),{
-            booksCount: 1,
-            image: book.image,
-            isbnCode: book.isbn,
-            lentBooksCount: 1,
-            tag: ["test"],
-            title: book.title,
-            //url: amazon?
-        })
-        console.log(querySnapshot);
-    }else{
-        console.error("isbnがありません");
+    const AddBook = async () => {
+        if (book?.isbn) {
+            const querySnapshot = await setDoc(doc(db, "books", book.isbn.toString()), {
+                booksCount: 1,
+                image: book.image,
+                isbnCode: book.isbn,
+                lentBooksCount: 1,
+                tag: [selectedTag],
+                title: book.title,
+                //url: amazon?
+            })
+            console.log(querySnapshot);
+        } else {
+            console.error("isbnがありません");
+        }
     }
-        
-            
+    const [selectedTag, setSelectedTag] = useState('');
+    const handleTagChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedTag(e.target.value);
+    
     }
-
     useEffect(() => {
         if ((isbn.length === 10 || isbn.length === 13) && /^\d+$/.test(isbn)) {
             fetchBook(isbn);
@@ -77,8 +79,8 @@ export default function Home() {
                 onChange={handleInputChange}
                 placeholder="Enter ISBN"
             />
-            <button 
-            className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800" onClick={() => fetchBook(isbn)}>検索</button> {/* isbnを渡す */}
+            <button
+                className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800" onClick={() => fetchBook(isbn)}>検索</button> {/* isbnを渡す */}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {book && (
                 <div>
@@ -88,9 +90,19 @@ export default function Home() {
                     <img src={book.image} alt={book.title} />
                     <p>{book.description}</p>
                     <p>isbn:{book.isbn}</p>
-                    <button 
-                    className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800" 
-                    onClick={AddBook}>登録</button>
+                    <select
+                        className="border border-gray-400 rounded-sm"
+                        value={selectedTag}
+                        onChange={handleTagChange}>
+                        {tags.map((tag) => (
+                            <option key={tag} value={tag}>
+                                {tag}
+                            </option>
+                        ))}
+                        </select>
+                    <button
+                        className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-3xl font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800"
+                        onClick={AddBook}>登録</button>
                 </div>
             )}
         </div>
