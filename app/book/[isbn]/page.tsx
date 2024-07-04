@@ -8,6 +8,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { Header } from "@/app/components/Header";
 import { Sample } from "@/app/components/Sample";
 import {Info} from "@/app/components/Info";
+import axios from "axios";
 type PageProps = {
     params:{isbn:number}
 }
@@ -15,20 +16,22 @@ export default function book({params}:PageProps){
     const {isbn} = params;
     const [book, setBook] = useState<Book | null>(null);
     const db = firestore;
-
     useEffect(() => {
         if (!book) {
             const getData = async () => {
                 const querySnapshot = await getDocs(collection(db, 'books'));
                 querySnapshot.forEach((doc) => {
-                    console.log(doc.data());
-                    if(doc.data().isbnCode == isbn)
+                    // console.log(doc.data());
+                    if(doc.data().isbnCode == isbn){
                         setBook(doc.data() as Book)
+                    }
                 });
             };
             getData();
+
             console.log(book);
         }
+
     }, [book, db]);
     return(
         <main className="min-h-screen">
