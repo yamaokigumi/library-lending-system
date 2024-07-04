@@ -25,6 +25,17 @@ export const tags = [
     "ノーコード",
     "デザイン",
     "ゲーム"]
+
+    // 登録用:この関数発火させてください。
+    const registerBook = async (book: Book) => {
+        const response = await fetch("/api/create", {
+            method: "POST",
+            body: JSON.stringify(book)
+        });
+    
+        console.log(response);
+    }
+    
 export function Info({isbn,status}:InfoProps){
 
         
@@ -60,33 +71,43 @@ export function Info({isbn,status}:InfoProps){
         }
     }, [book, db]);
     const AddBook = async () => {
+        const response = await axios.get<Book>(`/api/isbn?isbn=${isbn}`);
+        const bookData:Book = {
+            title: response.data.title,
+            image: response.data.image,
+            booksCount: 0,
+            isbnCode: isbn,
+            lentBooksCount: 0,
+            tag: [],
+            url: ""
+        }
+
         try {
-            const response = await axios.get<Book>(`/api/isbn?isbn=${isbn}`);
-            const bookData:Book = {
-                title: response.data.title,
-                image: response.data.image,
-                booksCount: 0,
-                isbnCode: 0,
-                lentBooksCount: 0,
-                tag: [],
-                url: ""
-            }
             setBook(bookData);
+
+            console.log("bookData:");
             console.log(bookData);
+            console.log("!");
+
         } catch (err: any) {
             console.log(err);
         }
         try{
-            const querySnapshot = await setDoc(doc(db, "books", isbn.toString()), {
-                booksCount: 1,
-                image: book?.image,
-                isbnCode: isbn.toString(),
-                lentBooksCount: 1,
-                tag: [selectedTag],
-                title: book?.title,
-                //url: amazon?
-            })
-            console.log(querySnapshot);
+            // const querySnapshot = await setDoc(doc(db, "books", isbn.toString()), {
+            //     booksCount: 1,
+            //     image: book?.image,
+            //     isbnCode: isbn.toString(),
+            //     lentBooksCount: 1,
+            //     tag: [selectedTag],
+            //     title: book?.title,
+            //     //url: amazon?
+            // })
+
+            // 取り急ぎ
+            registerBook(bookData);
+
+
+            // console.log(querySnapshot);
         }catch(e){
             console.log(isbn.toString());
         }

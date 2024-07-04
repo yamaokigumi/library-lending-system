@@ -20,13 +20,13 @@ const toHiragana = (str: string) => {
 
 // Book型の定義
 export type Book = {
-    booksCount: number; // 在庫数
+    title: string; // 書籍のタイトル
     image: string; // 書籍の画像URL
     isbnCode: number; // ISBNコード
     lentBooksCount: number; // 貸出済み書籍数
     tag: string[]; // 書籍のタグ（オプショナル）
-    title: string; // 書籍のタイトル
     url: string; // 書籍のURL
+    booksCount: number; // 在庫数
 };
 
 // Mainコンポーネントの定義
