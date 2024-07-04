@@ -6,7 +6,8 @@ const nextConfig = {
             "www.cmoa.jp",
             "dosbg3xlm0x1t.cloudfront.net",
             "m.media-amazon.com",
-            "www.kinokuniya.co.jp"
+            "www.kinokuniya.co.jp",
+            "books.google.com"
         ]
     }
 }
