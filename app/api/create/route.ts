@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     // const docRef = db.collection("books").doc(requestJson.isbnCode.toString());
     // await docRef.set(requestJson);
 
-    const docRef = await db.collection("books").doc("aaaa").set(requestJson);
+    const docRef = await db.collection("books").doc(requestJson.isbnCode + "bbbb").set(requestJson);
     console.log(docRef);
   } catch (err) {
     return Response.json({
