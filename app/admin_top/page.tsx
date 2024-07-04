@@ -15,6 +15,7 @@ interface Book {
 }
 
 export default function Home() {
+    const [isbn, setIsbn] = useState('');
     const [selectedImage, setSelectedImage] = useState<string | null>(null); // 選択された画像
     const [destination, setDestination] = useState<string | null>(null); // 目的地のURL
     const router = useRouter(); // Next.jsのルーター
@@ -25,12 +26,22 @@ export default function Home() {
     const handleImageClick = (image: string, dest: string) => {
         setSelectedImage(image); // 選択された画像を設定
         setDestination(dest); // 目的地のURLを設定
+        //図書追加削除を選択した場合
+        if(dest == "/add-remove-books"){
+
+        }
     };
 
     // 選択された画像がクリックされたときの処理
     const handleSelectedImageClick = () => {
         setSelectedImage(null); // 選択された画像をリセット
         setDestination(null); // 目的地のURLをリセット
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setIsbn(value);
+        router.push(`../book/${value}`);
     };
 
     // 登録用:この関数発火させてください。
@@ -42,6 +53,7 @@ export default function Home() {
 
         console.log(response);
     }
+
     
     useEffect(() => {
         if (selectedImage && destination) {
@@ -74,6 +86,28 @@ export default function Home() {
             }
         }
     },[barcode])
+
+    useEffect(() => {
+        if ((isbn.length === 10 || isbn.length === 13) && /^\d+$/.test(isbn)){
+            // const fetchBook = async (isbn: string) => {
+            //     try {
+            //         const response = await fetch(`/api/isbn?isbn=${isbn}`);
+            //         const book: Book = await response.json();
+            //         console.log(book);
+            //         console.log("isbnCode:", book.isbnCode);
+            //         if(book?.isbnCode){
+            //             //setBarcode(book.isbnCode.toString());
+            //             console.log("発火");
+            //             router.push(`../book/${book.isbnCode}`)
+            //         }
+            //     } catch (err: any) {
+            //         console.error(err);
+            //     }
+            // };
+
+            //fetchBook(isbn);
+        }
+    }, [isbn]);
 
     const AddDel = (add:Boolean)=>{
         let dest:string;
@@ -129,6 +163,14 @@ export default function Home() {
                             alt="New Image" 
                             width={600} 
                             height={600} />
+                            <input autoFocus 
+                            className='input-field w-3/4' 
+                            style={{ color: 'black', backgroundColor: 'white' }}
+                            type="number"
+                            value={isbn}
+                            onChange={handleInputChange}
+                            placeholder="バーコードリーダーで読み取ってください"
+                            />
                         <div className='flex'>
                             <button onClick={()=>AddDel(true)}>add</button>
                             <button onClick={()=>AddDel(false)}>delete</button>
