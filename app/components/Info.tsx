@@ -133,8 +133,9 @@ export function Info({isbn,status}:InfoProps){
                             </option>
                         ))}
                         </select>
+                        <br></br>
                         <button
-                        className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-3xl font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800"
+                        className="text-white bg-[#3BDEFF] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
                         onClick={AddBook}>登録</button>
                 {status!=2?
                     <div className="w-full">
